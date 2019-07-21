@@ -1,0 +1,31 @@
+//@import 'reset';
+
+.callib {
+    display: table;
+    border: 1px solid black;
+    width: var(--callib-width);
+    border-collapse: collapse;
+    th{
+        width: 14%;
+        height: calc(var(--callib-height)/40);
+        margin: 0em;
+        padding-left: 1em;
+        padding-right: 1em;
+        border: 1px solid black;
+    }
+    td{
+        width: 14%;
+        height: calc(var(--callib-height)/6.4);
+        margin: 0em;
+        padding-left: 1em;
+        padding-right: 1em;
+        border: 1px solid black;
+        position: relative;
+    }
+
+    .callib-date .callib-date-display{
+        position: absolute;
+        top: 0.25em;
+        left: 0.25em;
+    }
+}
