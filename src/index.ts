@@ -1,10 +1,22 @@
 import './style.scss';
 import 'normalize.css';
-import { generateCalendar } from './dateGeneration';
+import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal } from './dateGeneration';
+
+export class CalEvent {
+    date: Date;
+    title: string;
+    constructor(date: Date, title: string) {
+        this.date = date;
+        this.title = title;
+    }
+}
+
+let events = new Array<CalEvent>();
+let cal: Element;
 
 export function createCalendar(location: string, width: string) {
     location = location.charAt(0) === '#'? location.substring(1):location;
-    let cal = document.getElementById(location);
+    cal = document.getElementById(location);
 
     setCalWidth(width, cal);
     setCalHeight("39em", cal);
@@ -38,6 +50,17 @@ export function createCalendar(location: string, width: string) {
     }
     
     generateCalendar(new Date(), cal);
+}
+
+export function addEvent(event:CalEvent) {
+    events.push(event);
+
+    const eventDay = event.date.getDate();
+    const shift = getDayFirstDate(event.date);
+    const row = Math.floor((eventDay + shift) / 7);
+    const col = Math.floor((eventDay + shift) % 7);
+
+    insertIntoCal(cal, row, col, "<div class='content'"+event.title+"</div>");
 }
 
 function setCalWidth(width:string, cal: Element){

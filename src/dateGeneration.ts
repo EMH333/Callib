@@ -5,20 +5,24 @@ export function generateCalendar(d: Date, el: Element) {
         var posi_row = Math.floor((i + shift) / 7);
         var posi_col = Math.floor((i + shift) % 7);
         var currentDate = i + 1;
-        el.querySelector('#callib-r' + posi_row).querySelector('.col' + posi_col).innerHTML = generateHTML(currentDate);
+        insertIntoCal(el,posi_row,posi_col,generateHTML(currentDate));
     }
 }
 
-function generateHTML(currentDate: number) {
+export function insertIntoCal(el: Element, row:number,col:number,html:string){
+    el.querySelector('#callib-r' + row).querySelector('.col' + col).innerHTML += html;
+}
+
+function generateHTML(currentDate: number):string {
     return `<span class='callib-date-display'>` + currentDate + `</span>`;
 }
 
-function getDayFirstDate(d: Date) {
+export function getDayFirstDate(d: Date) {
     var firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
     return firstDay.getDay();
 }
 
-function howManyDays(d: Date) {
+export function howManyDays(d: Date) {
     var m = d.getMonth() + 1;
     if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) return 31;
     if (m == 2) {

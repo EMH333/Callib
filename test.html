@@ -13,45 +13,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             callib.createCalendar("#cal", "60em");
+            callib.addEvent(new callib.CalEvent(new Date(), "<span>aaaaaaa</span>"));
+            callib.addEvent(new callib.CalEvent(new Date(), "<span>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>"));
         }, false);
     </script>
     <div id="cal"></div>
-
-   <!-- <div id="test">
-        <table class="callib">
-            <tr class="callib-label">
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wendesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-            </tr>
-            <tr>
-                <td>Breed</td>
-                <td>Jack Russell</td>
-                <td>Poodle</td>
-                <td>Streetdog</td>
-                <td>Cocker Spaniel</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-            </tr>
-            <tr>
-                <td>Test</td>
-            </tr>
-        </table>
-    </div>-->
 </body>
 
 </html>
