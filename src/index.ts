@@ -1,6 +1,6 @@
 import './style.scss';
 import 'normalize.css';
-import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal } from './dateGeneration';
+import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './dateGeneration';
 
 export class CalEvent {
     date: Date;
@@ -11,79 +11,97 @@ export class CalEvent {
     }
 }
 
-let events = new Array<CalEvent>();
-let cal: Element;
+export class Callib {
+    cal: Element;
+    events: Array<CalEvent>;
+    month: number;//the number of the month, Jan is 0
+    constructor(location: string, month: number) {
+        location = location.charAt(0) === '#' ? location.substring(1) : location;
+        this.cal = document.getElementById(location);
+        this.events = new Array<CalEvent>();
+        this.month = month;
+    }
 
-export function createCalendar(location: string, width: string) {
-    location = location.charAt(0) === '#'? location.substring(1):location;
-    cal = document.getElementById(location);
+    createCalendar(width: string) {
+        this.setCalWidth(width, this.cal);
+        this.setCalHeight("39em", this.cal);
 
-    setCalWidth(width, cal);
-    setCalHeight("39em", cal);
-
-    cal.innerHTML = `
-    <table class="callib">
-    <tr class="callib-label">
-        <th>Sunday</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wendesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-    </tr>
-    </table>
-    `; 
-
-    for(let r = 0; r < 6; r++){
-        cal.lastElementChild.innerHTML += `
-        <tr id="callib-r`+r +`">
-            <td class="col0 callib-date"></td>
-            <td class="col1 callib-date"></td>
-            <td class="col2 callib-date"></td>
-            <td class="col3 callib-date"></td>
-            <td class="col4 callib-date"></td>
-            <td class="col5 callib-date"></td>
-            <td class="col6 callib-date"></td>
+        this.cal.innerHTML = `
+        <table class="callib">
+        <tr class="callib-label">
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wendesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
         </tr>
+        </table>
         `;
+
+        for (let r = 0; r < 6; r++) {
+            this.cal.lastElementChild.innerHTML += `
+            <tr id="callib-r`+ r + `">
+                <td class="col0 callib-date"></td>
+                <td class="col1 callib-date"></td>
+                <td class="col2 callib-date"></td>
+                <td class="col3 callib-date"></td>
+                <td class="col4 callib-date"></td>
+                <td class="col5 callib-date"></td>
+                <td class="col6 callib-date"></td>
+            </tr>
+            `;
+        }
+
+        let date = new Date();
+        date.setMonth(this.month);
+        generateCalendar(date, this.cal);
     }
-    
-    generateCalendar(new Date(), cal);
-}
 
-export function addEvent(event:CalEvent) {
-    events.push(event);
-
-    const eventDay = event.date.getDate();
-    const shift = getDayFirstDate(event.date);
-    const row = Math.floor((eventDay + shift) / 7);
-    const col = Math.floor((eventDay + shift) % 7);
-
-    insertIntoCal(cal, row, col, "<div class='content'"+event.title+"</div>");
-}
-
-function setCalWidth(width:string, cal: Element){
-    let calWidth = getPixels(width, cal);
-
-    document.documentElement.style
-    .setProperty('--callib-width', calWidth+'px');
-}
-
-function setCalHeight(height:string, cal: Element){
-    let calHeight = getPixels(height, cal);
-
-    document.documentElement.style
-    .setProperty('--callib-height', calHeight+'px');
-}
-
-function getPixels(input:string, el: Element):number{
-    let pixels: number;
-    if(input.indexOf("em")>0){
-        let fontSize = parseFloat(getComputedStyle(el).fontSize);
-        pixels = fontSize * parseFloat(input.substring(0,input.indexOf("em")));
-    }else{
-        pixels = parseInt(input);
+    addEvent(event: CalEvent) {
+        this.events.push(event);
+        this.reRender();
     }
-    return pixels;
+
+    reRender(){
+        clearCalendar(this.cal, this.month);
+
+        for(const event of this.events){
+            if(event.date.getMonth() == this.month){
+                const eventDay = event.date.getDate();
+                const shift = getDayFirstDate(event.date) - 1;
+                const row = Math.floor((eventDay + shift) / 7);
+                const col = Math.floor((eventDay + shift) % 7);
+        
+                insertIntoCal(this.cal, row, col, "<div class='content'" + event.title + "</div>");
+            }
+        }
+    }
+
+    setCalWidth(width: string, cal: Element) {
+        let calWidth = this.getPixels(width, cal);
+
+        document.documentElement.style
+            .setProperty('--callib-width', calWidth + 'px');
+    }
+
+    setCalHeight(height: string, cal: Element) {
+        let calHeight = this.getPixels(height, cal);
+
+        document.documentElement.style
+            .setProperty('--callib-height', calHeight + 'px');
+    }
+
+    private getPixels(input: string, el: Element): number {
+        let pixels: number;
+        if (input.indexOf("em") > 0) {
+            let fontSize = parseFloat(getComputedStyle(el).fontSize);
+            pixels = fontSize * parseFloat(input.substring(0, input.indexOf("em")));
+        } else {
+            pixels = parseInt(input);
+        }
+        return pixels;
+    }
 }
+

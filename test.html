@@ -12,9 +12,19 @@
     <script src="dist/callib.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            callib.createCalendar("#cal", "60em");
-            callib.addEvent(new callib.CalEvent(new Date(), "<span>aaaaaaa</span>"));
-            callib.addEvent(new callib.CalEvent(new Date(), "<span>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>"));
+            let date = new Date();
+            //date.setMonth(3);
+
+            const cal = new callib.Callib("#cal",date.getMonth());
+            cal.createCalendar("60em");
+            document.cal = cal;
+
+            cal.addEvent(new callib.CalEvent(date, "<span>aaaaaaa</span>"));
+            cal.addEvent(new callib.CalEvent(date, "<span>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>"));
+
+            let thirdy = new Date(date);
+            thirdy.setDate(30);
+            cal.addEvent(new callib.CalEvent(thirdy, "<span>30th</span>"));
         }, false);
     </script>
     <div id="cal"></div>
