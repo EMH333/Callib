@@ -1,5 +1,5 @@
 const path = require('path');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
     entry: './src/index.ts',
     module: {
@@ -29,9 +29,16 @@ module.exports = {
         filename: 'callib.js',
         library: 'callib'
     },
-    optimization: {
-        minimizer: [new OptimizeCSSAssetsPlugin({})],
-    },
+    plugins: [
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.optimize\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorPluginOptions: {
+              preset: ['default', { discardComments: { removeAll: true } }],
+            },
+            canPrint: true
+          })
+    ],
     resolve: {
         extensions: ['.js', '.ts'],
     }
