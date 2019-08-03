@@ -1,5 +1,4 @@
 import './style.scss';
-import 'normalize.css';
 import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './dateGeneration';
 
 export class CalEvent {
@@ -12,9 +11,9 @@ export class CalEvent {
 }
 
 export class Callib {
-    cal: Element;
-    events: Array<CalEvent>;
-    month: number;//the number of the month, Jan is 0
+    private cal: Element;
+    private events: Array<CalEvent>;
+    private month: number;//the number of the month, Jan is 0
     constructor(location: string, month: number) {
         location = location.charAt(0) === '#' ? location.substring(1) : location;
         this.cal = document.getElementById(location);
@@ -61,10 +60,10 @@ export class Callib {
 
     addEvent(event: CalEvent) {
         this.events.push(event);
-        this.reRender();
+        this.rerender();
     }
 
-    reRender(){
+    rerender(){
         clearCalendar(this.cal, this.month);
 
         for(const event of this.events){
