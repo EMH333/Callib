@@ -1,9 +1,16 @@
 import './style.scss';
 import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './dateGeneration';
 
+/**
+ * 
+*/
 export class CalEvent {
     date: Date;
     title: string;
+    /**
+     * @param date The date of the event
+     * @param title Title of the event
+     */
     constructor(date: Date, title: string) {
         this.date = date;
         this.title = title;
@@ -73,7 +80,7 @@ export class Callib {
         date.setMonth(this.month);
         generateCalendar(date, this.cal);
 
-        document.getElementById("callib-month").addEventListener("change",this.calMonthEvent.bind(this));
+        document.getElementById("callib-month").addEventListener("change", this.calMonthEvent.bind(this));
     }
 
     addEvent(event: CalEvent) {
@@ -110,22 +117,22 @@ export class Callib {
             .setProperty('--callib-height', calHeight + 'px');
     }
 
-    calMonthEvent(){
-        let el:HTMLSelectElement = <HTMLSelectElement>document.getElementById("callib-month");
+    calMonthEvent() {
+        let el: HTMLSelectElement = <HTMLSelectElement>document.getElementById("callib-month");
         let val = el.value;
         const months = {
-            'Jan' : 0,
-            'Feb' : 1,
-            'Mar' : 2,
-            'Apr' : 3,
-            'May' : 4,
-            'Jun' : 5,
-            'Jul' : 6,
-            'Aug' : 7,
-            'Sep' : 8,
-            'Oct' : 9,
-            'Nov' : 10,
-            'Dec' : 11
+            'Jan': 0,
+            'Feb': 1,
+            'Mar': 2,
+            'Apr': 3,
+            'May': 4,
+            'Jun': 5,
+            'Jul': 6,
+            'Aug': 7,
+            'Sep': 8,
+            'Oct': 9,
+            'Nov': 10,
+            'Dec': 11
         }
         this.month = months[val];
         this.rerender();
