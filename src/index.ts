@@ -26,6 +26,22 @@ export class Callib {
         this.setCalHeight("39em", this.cal);
 
         this.cal.innerHTML = `
+        <div>
+            <select name="month" id="callib-month">
+                <option value="Jan">January</option>
+                <option value="Feb">Febuary</option>
+                <option value="Mar">March</option>
+                <option value="Apr">April</option>
+                <option value="May">May</option>
+                <option value="Jun">June</option>
+                <option value="Jul">July</option>
+                <option value="Aug">August</option>
+                <option value="Sep">September</option>
+                <option value="Oct">October</option>
+                <option value="Nov">November</option>
+                <option value="Dec">December</option>
+            </select>
+        </div>
         <table class="callib">
         <tr class="callib-label">
             <th>Sunday</th>
@@ -56,6 +72,8 @@ export class Callib {
         let date = new Date();
         date.setMonth(this.month);
         generateCalendar(date, this.cal);
+
+        document.getElementById("callib-month").addEventListener("change",this.calMonthEvent.bind(this));
     }
 
     addEvent(event: CalEvent) {
@@ -63,16 +81,16 @@ export class Callib {
         this.rerender();
     }
 
-    rerender(){
+    rerender() {
         clearCalendar(this.cal, this.month);
 
-        for(const event of this.events){
-            if(event.date.getMonth() == this.month){
+        for (const event of this.events) {
+            if (event.date.getMonth() == this.month) {
                 const eventDay = event.date.getDate();
                 const shift = getDayFirstDate(event.date) - 1;
                 const row = Math.floor((eventDay + shift) / 7);
                 const col = Math.floor((eventDay + shift) % 7);
-        
+
                 insertIntoCal(this.cal, row, col, "<div class='content'" + event.title + "</div>");
             }
         }
@@ -90,6 +108,27 @@ export class Callib {
 
         document.documentElement.style
             .setProperty('--callib-height', calHeight + 'px');
+    }
+
+    calMonthEvent(){
+        let el:HTMLSelectElement = <HTMLSelectElement>document.getElementById("callib-month");
+        let val = el.value;
+        const months = {
+            'Jan' : 0,
+            'Feb' : 1,
+            'Mar' : 2,
+            'Apr' : 3,
+            'May' : 4,
+            'Jun' : 5,
+            'Jul' : 6,
+            'Aug' : 7,
+            'Sep' : 8,
+            'Oct' : 9,
+            'Nov' : 10,
+            'Dec' : 11
+        }
+        this.month = months[val];
+        this.rerender();
     }
 
     private getPixels(input: string, el: Element): number {

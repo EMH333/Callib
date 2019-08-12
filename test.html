@@ -12,11 +12,12 @@
 <body>
     <script src="dist/callib.js"></script>
     <script>
+        let cal;
         document.addEventListener('DOMContentLoaded', function () {
             let date = new Date();
             //date.setMonth(3);
 
-            const cal = new callib.Callib("#cal",date.getMonth());
+            cal = new callib.Callib("#cal", date.getMonth());
             cal.createCalendar("60em");
             document.cal = cal;
 
