@@ -22,8 +22,18 @@ export function clearCalendar(el: Element, month: number){
     d.setDate(1);
     d.setMonth(month);
     
-    var days = howManyDays(d);
-    var shift = getDayFirstDate(d);
+    let days = howManyDays(d);
+    let shift = getDayFirstDate(d);
+
+    //clear whole calendar
+    //TODO remove constant of 42
+    //change to use correctly value depending on rows
+    for(let i = 0; i < 42; i++){
+        let row = Math.floor(i / 7);
+        let col = Math.floor(i % 7);
+        clearFromCell(el, row,col);
+    }
+
     for (var i = 0; i < days; i++) {
         var posi_row = Math.floor((i + shift) / 7);
         var posi_col = Math.floor((i + shift) % 7);
