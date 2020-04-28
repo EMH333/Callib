@@ -54,26 +54,5 @@ export function getDayFirstDate(d: Date) {
 }
 
 export function howManyDays(d: Date) {
-    var m = d.getMonth() + 1;
-    if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) return 31;
-    if (m == 2) {
-        if (isLeapYear(d.getFullYear())) {
-            return 29;
-        } else {
-            return 28;
-        }
-    }
-    return 30;
-}
-
-function isLeapYear(year: number) {
-    if (year % 400 == 0) {
-        return true;
-    } else if (year % 100 == 0) {
-        return false;
-    } else if (year % 4 == 0) {
-        return true;
-    } else {
-        return false;
-    }
+    return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 }
