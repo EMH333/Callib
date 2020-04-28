@@ -1,5 +1,6 @@
 import './style.scss';
 import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './dateGeneration';
+import { Options } from "./options";
 
 /**
  * 
@@ -18,18 +19,26 @@ export class CalEvent {
 }
 
 export class Callib {
+    private options: Options;
     private cal: Element;
     private events: Array<CalEvent>;
     private month: number;//the number of the month, Jan is 0
-    constructor(location: string, month: number) {
+    constructor(location: string, month: number, options: Options) {
+        this.options = {
+            width: "60em",
+            selectableDates: true,
+        };
+        Object.assign(this.options, options);
+
         location = location.charAt(0) === '#' ? location.substring(1) : location;
         this.cal = document.getElementById(location);
         this.events = new Array<CalEvent>();
         this.month = month;
     }
 
-    createCalendar(width: string) {
-        this.setCalWidth(width, this.cal);
+    //TODO could be private?
+    createCalendar() {
+        this.setCalWidth(this.options.width, this.cal);
         this.setCalHeight("39em", this.cal);
 
         this.cal.innerHTML = `
