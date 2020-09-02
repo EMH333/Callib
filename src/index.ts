@@ -1,5 +1,5 @@
 import './style.scss';
-import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './dateGeneration';
+import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './calGeneration';
 import { Options } from "./options";
 
 /**
@@ -89,7 +89,10 @@ export class Callib {
         date.setMonth(this.month);
         generateCalendar(date, this.cal);
 
+        document.getElementById("callib-month").removeEventListener("change", this.calMonthEvent.bind(this));
         document.getElementById("callib-month").addEventListener("change", this.calMonthEvent.bind(this));
+
+        this.rerender();//TODO move rendering to seperate file to reduce concurrent logic. Should then be able to remove extra row when needed
     }
 
     addEvent(event: CalEvent) {
