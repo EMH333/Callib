@@ -1,4 +1,4 @@
-import './style.scss';
+//import './style.scss';
 import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './calGeneration';
 import { Options } from "./options";
 
