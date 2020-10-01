@@ -18,6 +18,6 @@
     "eslint-config-google": "^0.14.0",
     "typescript": "^4.0.2",
     "dart-sass": "^1.25.0",
-    "esbuild": "^0.6.28"
+    "esbuild": "^0.7.8"
   }
 }
