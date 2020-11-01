@@ -4,7 +4,7 @@ const fs = require('fs');
 
 //build js
 build({
-    entryPoints: ['./src/index.ts'],
+    entryPoints: ['./src/forTesting.ts'],
     outfile: './dist/callib.js',
     minify: true,
     bundle: true,

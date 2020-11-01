@@ -41,7 +41,7 @@ export function clearCalendar(el: Element, month: number) {
         var posi_col = Math.floor((i + shift) % 7);
         var currentDate = i + 1;
 
-        clearFromCell(el, posi_row, posi_col);
+        //clearFromCell(el, posi_row, posi_col);
         insertIntoCal(el, posi_row, posi_col, generateHTML(currentDate));
     }
 }
@@ -59,7 +59,7 @@ export function howManyDays(d: Date) {
     return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
 }
 
-function resetHTML(el: Element) {
+export function resetHTML(el: Element) {
     el.innerHTML = `
         <div>
             <select name="month" id="callib-month">

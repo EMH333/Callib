@@ -1,5 +1,5 @@
 //import './style.scss';
-import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar } from './calGeneration';
+import { generateCalendar, howManyDays, getDayFirstDate, insertIntoCal, clearCalendar, resetHTML } from './calGeneration';
 import { Options } from "./options";
 
 /**
@@ -23,7 +23,7 @@ export class Callib {
     private cal: Element;
     private events: Array<CalEvent>;
     private month: number;//the number of the month, Jan is 0
-    constructor(location: string, month: number, options: Options) {
+    constructor(location: string, month: number, options?: Options) {
         this.options = {
             width: "60em",
             selectableDates: true,
@@ -41,49 +41,7 @@ export class Callib {
         this.setCalWidth(this.options.width, this.cal);
         this.setCalHeight("39em", this.cal);
 
-        this.cal.innerHTML = `
-        <div>
-            <select name="month" id="callib-month">
-                <option value="Jan">January</option>
-                <option value="Feb">Febuary</option>
-                <option value="Mar">March</option>
-                <option value="Apr">April</option>
-                <option value="May">May</option>
-                <option value="Jun">June</option>
-                <option value="Jul">July</option>
-                <option value="Aug">August</option>
-                <option value="Sep">September</option>
-                <option value="Oct">October</option>
-                <option value="Nov">November</option>
-                <option value="Dec">December</option>
-            </select>
-        </div>
-        <table class="callib">
-        <tr class="callib-label">
-            <th>Sunday</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wendesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-        </tr>
-        </table>
-        `;
-
-        for (let r = 0; r < 6; r++) {
-            this.cal.lastElementChild.innerHTML += `
-            <tr id="callib-r`+ r + `">
-                <td class="col0 callib-date"></td>
-                <td class="col1 callib-date"></td>
-                <td class="col2 callib-date"></td>
-                <td class="col3 callib-date"></td>
-                <td class="col4 callib-date"></td>
-                <td class="col5 callib-date"></td>
-                <td class="col6 callib-date"></td>
-            </tr>
-            `;
-        }
+        resetHTML(this.cal);
 
         let date = new Date();
         date.setMonth(this.month);
