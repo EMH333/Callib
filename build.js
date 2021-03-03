@@ -18,6 +18,6 @@ build({
 const scssInFile = './src/style.scss'
 const cssOutFile = './dist/main.css'
 let result = sass.renderSync({ file: scssInFile });
-fs.writeFile(cssOutFile, result, (err) => {
+fs.writeFile(cssOutFile, result.css, (err) => {
     if (err) throw err;
 });
