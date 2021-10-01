@@ -15,7 +15,7 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "dart-sass": "^1.25.0",
-    "esbuild": "^0.12.6",
+    "esbuild": "^0.13.3",
     "esbuild-sass-plugin": "^1.4.4",
     "esbuild-svelte": "^0.5.1",
     "eslint": "^7.28.0",
