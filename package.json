@@ -17,7 +17,7 @@
     "dart-sass": "^1.25.0",
     "esbuild": "^0.12.6",
     "esbuild-sass-plugin": "^1.4.4",
-    "esbuild-svelte": "^0.5.1",
+    "esbuild-svelte": "^0.6.2",
     "eslint": "^7.28.0",
     "eslint-config-google": "^0.14.0",
     "svelte-preprocess": "^4.7.3",
